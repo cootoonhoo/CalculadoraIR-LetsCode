@@ -1,1 +1,3 @@
-﻿Marco;1
+﻿Marco;10000
+Bruna;10Marco;10000
+Bruna;10

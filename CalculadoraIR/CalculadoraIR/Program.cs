@@ -28,7 +28,10 @@ namespace CalculadoraIR
                         RepoService.SavePerson(RegistryService.CreatePerson());
                         break;
                     case 2:
-
+                        foreach (var Person in RepoService.GetPeople()) {
+                            Console.WriteLine($"Nome: {Person.Name} Renda: {Person.Revenue}");
+                        }
+                        Console.ReadKey();
                         break;
                     default:
                         RepoService.SaveRepo();
@@ -44,7 +47,6 @@ namespace CalculadoraIR
                 .AddScoped<ITaxCalculator, TaxCalculator>()
                 .AddScoped<IPersonRepository, PersonRepository>()
                 .AddScoped<IPersonRegisty, PersonRegistry>();
-            
         }
 
         public static int MainMenuFlow() {
