@@ -6,5 +6,10 @@ namespace CalculadoraIR.Domain
         public string Name { get; set; }
         public decimal Revenue { get; set; }
         public Person() { }
+
+        public override string ToString()
+        {
+            return $"{Name};{Revenue}";
+        }
     }
 }

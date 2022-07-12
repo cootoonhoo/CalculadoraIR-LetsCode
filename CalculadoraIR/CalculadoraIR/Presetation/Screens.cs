@@ -10,7 +10,7 @@
         public static void MainMenu()
         {
             Console.WriteLine(
-    @"                  MENU
+    @"                MENU
 1 - Cadastrar uma nova pessoa
 2 - Consultar imposto
 3 - Sair
