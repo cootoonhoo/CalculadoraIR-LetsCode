@@ -15,7 +15,7 @@ namespace CalculadoraIR
         }
         public static void ConfigureServices(IServiceCollection services)
         {
-            
+            //services.AddScoped(Itax)
         }
     }
 }
