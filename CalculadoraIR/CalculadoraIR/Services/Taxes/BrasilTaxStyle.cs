@@ -16,7 +16,7 @@ namespace CalculadoraIR.Services.Taxes
             return DeriveIndex(amount);
         }
 
-        private decimal AliquotIndex(decimal amount)
+        public decimal AliquotIndex(decimal amount)
         {
             switch (amount)
             {
@@ -36,7 +36,7 @@ namespace CalculadoraIR.Services.Taxes
                     return 0.275M;
             }
         }
-        private decimal DeriveIndex(decimal amount)
+        public decimal DeriveIndex(decimal amount)
         {
             switch (amount)
             {

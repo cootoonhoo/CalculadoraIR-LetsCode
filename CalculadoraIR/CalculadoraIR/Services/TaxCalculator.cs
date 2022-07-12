@@ -2,7 +2,7 @@
 
 namespace CalculadoraIR.Services
 {
-    class TaxCalculator : ITaxCalculator
+    public class TaxCalculator : ITaxCalculator
     {
         private readonly ITaxValues taxValues;
         public TaxCalculator(ITaxValues taxValues)
@@ -12,10 +12,13 @@ namespace CalculadoraIR.Services
 
         public decimal CalculateTax(decimal amount)
         {
-            decimal AllTaxes = taxValues.GetAliquot(amount) + taxValues.GetDerive(amount);
-
+            decimal AllTaxes = taxValues.GetAliquot(amount) - taxValues.GetDerive(amount);
             return AllTaxes;
         }
 
+        public decimal CalculateTaxPerMonth(decimal amount)
+        {
+            return CalculateTax(amount) / 12; 
+        }
     }
 }
