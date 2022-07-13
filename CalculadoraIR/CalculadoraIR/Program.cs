@@ -21,6 +21,7 @@ namespace CalculadoraIR
             var RepoService = serviceProvicer.GetService<IPersonRepository>();
 
             int OptionResponse;
+            string Response;
 
             do
             {
@@ -28,10 +29,23 @@ namespace CalculadoraIR
                 switch (OptionResponse)
                 {
                     case 1:
-                        RepoService.SavePerson(RegistryService.CreatePerson());
+                        Person newPerson = RegistryService.CreatePerson();
+                        Console.Clear();
+                        Screens.Header();
+                        PrintService.PrintPerson(newPerson);
+                        RepoService.SavePerson(newPerson);
                         break;
                     case 2:
-                        SearchMenuFlow(PrintService, RepoService);
+                        Response = GetName();
+                        var PeopleSearch = SearchService.SearchPersonByName(Response, RepoService.GetPeople());
+                        var SelectedPerson = PrintService.PrintSelectedPerson(PeopleSearch);
+                        Console.Clear();
+                        Screens.Header();
+                        PrintService.PrintPerson(SelectedPerson);
+                        break;
+                    case 3:
+                        Console.Clear();
+                        PrintService.PrintAllPeople(RepoService.GetPeople());
                         break;
                     default:
                         return;
@@ -62,36 +76,22 @@ namespace CalculadoraIR
                 Screens.MainMenu();
                 if (!test) Console.WriteLine("Opção inválida");
                 Console.WriteLine("Digite uma alternativa:");
-                test = int.TryParse(Console.ReadLine(), out OptionResponse) && OptionResponse > 0 && OptionResponse <= 3;
+                test = int.TryParse(Console.ReadLine(), out OptionResponse) && OptionResponse > 0 && OptionResponse <= 4;
             } while (!test);
             return OptionResponse;
         }
-        public static int SearchMenuFlow(IPrintService printService, IPersonRepository personRepository)
-        {
-            int OptionResponse;
-            bool test = true;
+        public static string GetName() {
+            string Response;
+            Console.Clear();
+            Screens.Header();
             do
             {
-                Console.Clear();
-                Screens.Header();
-                Screens.ConsultMenu();
-                if (!test) Console.WriteLine("Opção inválida");
-                Console.WriteLine("Digite uma alternativa:");
-                test = int.TryParse(Console.ReadLine(), out OptionResponse) && OptionResponse > 0 && OptionResponse <= 3;
-            } while (!test);
-
-            switch (OptionResponse) 
-            {
-                case 1:
-
-                case 2:
-                    printService.PrintAllPeople(personRepository.GetPeople());
-                    break;
-                default:
-                    break;
-            }
-
-            return OptionResponse;
+                Console.WriteLine("Digite um nome:");
+                Response = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(Response))
+                    Console.WriteLine("Nome inválido");
+            } while (string.IsNullOrWhiteSpace(Response));
+            return Response;
         }
     }
 }
