@@ -9,7 +9,7 @@ namespace CalculadoraIR.Repositories
     internal class PersonRepository : IPersonRepository
     {
         public List<Person> _database { get; private set; } = new();
-        public List<Person> OpenDataBase { get; private set; } = new();
+        public List<Person> DefaultDataBase { get; private set; } = new();
         public void SavePerson(Person person)
         {
             _database.Add(person);
@@ -31,7 +31,8 @@ namespace CalculadoraIR.Repositories
                     }
                 }
                 File.Close();
-                OpenDataBase = _database;
+                foreach(var Person in _database)
+                    DefaultDataBase.Add(Person);
             }
             catch (Exception e)
             {
@@ -40,15 +41,26 @@ namespace CalculadoraIR.Repositories
         }
         public void SaveRepo()
         {
+            bool ContainsInDefaultDataBase;
             try
             {
-                StreamWriter File = new StreamWriter("../../../PersonDataBase.txt", true, Encoding.UTF8);
-                foreach (var Person in OpenDataBase) 
+                StreamWriter File = new StreamWriter("../../../PersonDataBase.txt", true, Encoding.ASCII);
+                for (int i = 0; i < _database.Count; i++)
                 {
-                    //Corrigir aqui:
-                    if (!_database.Contains(Person)) 
+                    ContainsInDefaultDataBase = false;
+                    for (int j = 0; i < DefaultDataBase.Count; j++)
                     {
-                        File.WriteLine(Person);
+                        if (DefaultDataBase[j].Name == _database[i].Name) 
+                        {
+                            ContainsInDefaultDataBase = true;
+                            break;
+                        }
+                    }
+                        Console.WriteLine("ContainsInDefaultDataBase = " + ContainsInDefaultDataBase);
+                    if (ContainsInDefaultDataBase == false)
+                    {
+                        Console.WriteLine("ENTREI");
+                        File.Write($"\n{_database[i].Name};{_database[i].Revenue}\r");
                     }
                 }
                 File.Close();

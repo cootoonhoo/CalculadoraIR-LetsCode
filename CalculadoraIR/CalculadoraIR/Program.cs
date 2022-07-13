@@ -39,6 +39,15 @@ namespace CalculadoraIR
                     case 2:
                         Response = GetName();
                         var PeopleSearch = SearchService.SearchPersonByName(Response, RepoService.GetPeople());
+                        if (PeopleSearch.Count() == 0) 
+                        {
+                            Console.Clear();
+                            Screens.Header();
+                            Console.WriteLine("Nenhum cliente com esse nome foi encontrado");
+                            Console.WriteLine("Aperte ENTER para voltar ao menu");
+                            Console.ReadLine();
+                            break;
+                        }
                         var SelectedPerson = PrintService.PrintSelectedPerson(PeopleSearch);
                         Console.Clear();
                         Screens.Header();

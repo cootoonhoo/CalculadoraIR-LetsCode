@@ -1,3 +1,5 @@
-﻿Marco Antonio Batista;10000
-Lucas Henrique;35000
-Josiel Fragra;50000
+﻿Marco Antonio Batista;21800
+Lucas Henrique;32134
+Josiel Fragra;53000
+Larissa Mendes;45000
+Eduardo Monteiro;75000
