@@ -22,6 +22,8 @@ namespace CalculadoraIR.Repositories
                 StreamReader File = new StreamReader("../../../PersonDataBase.txt");
                 do
                 {
+                Console.WriteLine("TO aqui");
+                Console.ReadLine();
                     Line = File.ReadLine();
                     if (!string.IsNullOrWhiteSpace(Line))
                     {
@@ -31,6 +33,8 @@ namespace CalculadoraIR.Repositories
                         newPerson.Revenue = Decimal.Parse(Data[1]);
                         _database.Add(newPerson);
                     }
+                Console.WriteLine("Close O aqui");
+                Console.ReadLine();
                 } while (!string.IsNullOrWhiteSpace(Line));
                 File.Close();
             }
@@ -60,11 +64,6 @@ namespace CalculadoraIR.Repositories
         public List<Person> GetPeople()
         {
             return _database;
-        }
-
-        public PersonRepository() {
-            LoadRepo();
-            Originalpersons = _database;
         }
     }
 }

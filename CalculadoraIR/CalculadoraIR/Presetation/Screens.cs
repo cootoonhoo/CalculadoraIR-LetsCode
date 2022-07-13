@@ -12,7 +12,7 @@
             Console.WriteLine(
     @"                MENU
 1 - Cadastrar uma nova pessoa
-2 - Consultar imposto
+2 - Consultar DataBase
 3 - Sair
 "
     );

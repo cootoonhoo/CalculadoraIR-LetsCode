@@ -16,6 +16,8 @@ namespace CalculadoraIR
             ConfigureServices(services);
             var serviceProvicer = services.BuildServiceProvider();
             var RegistryService = serviceProvicer.GetService<IPersonRegisty>();
+            var SearchService = serviceProvicer.GetService<ISearchPerson>();
+            var PrintService = serviceProvicer.GetService<IPrintService>();
             var RepoService = serviceProvicer.GetService<IPersonRepository>();
 
             int OptionResponse;
@@ -23,18 +25,15 @@ namespace CalculadoraIR
             do
             {
                 OptionResponse = MainMenuFlow();
-                switch (OptionResponse) {
+                switch (OptionResponse)
+                {
                     case 1:
                         RepoService.SavePerson(RegistryService.CreatePerson());
                         break;
                     case 2:
-                        foreach (var Person in RepoService.GetPeople()) {
-                            Console.WriteLine($"Nome: {Person.Name} Renda: {Person.Revenue}");
-                        }
-                        Console.ReadKey();
+                        SearchMenuFlow(PrintService, RepoService);
                         break;
                     default:
-                        RepoService.SaveRepo();
                         return;
                 }
             } while (true);
@@ -46,10 +45,13 @@ namespace CalculadoraIR
                 .AddScoped<ITaxValues, BrasilTaxStyle>()
                 .AddScoped<ITaxCalculator, TaxCalculator>()
                 .AddScoped<IPersonRepository, PersonRepository>()
+                .AddScoped<ISearchPerson, SearchPerson>()
+                .AddScoped<IPrintService, PrintService>()
                 .AddScoped<IPersonRegisty, PersonRegistry>();
         }
 
-        public static int MainMenuFlow() {
+        public static int MainMenuFlow()
+        {
 
             int OptionResponse;
             bool test = true;
@@ -62,6 +64,33 @@ namespace CalculadoraIR
                 Console.WriteLine("Digite uma alternativa:");
                 test = int.TryParse(Console.ReadLine(), out OptionResponse) && OptionResponse > 0 && OptionResponse <= 3;
             } while (!test);
+            return OptionResponse;
+        }
+        public static int SearchMenuFlow(IPrintService printService, IPersonRepository personRepository)
+        {
+            int OptionResponse;
+            bool test = true;
+            do
+            {
+                Console.Clear();
+                Screens.Header();
+                Screens.ConsultMenu();
+                if (!test) Console.WriteLine("Opção inválida");
+                Console.WriteLine("Digite uma alternativa:");
+                test = int.TryParse(Console.ReadLine(), out OptionResponse) && OptionResponse > 0 && OptionResponse <= 3;
+            } while (!test);
+
+            switch (OptionResponse) 
+            {
+                case 1:
+
+                case 2:
+                    printService.PrintAllPeople(personRepository.GetPeople());
+                    break;
+                default:
+                    break;
+            }
+
             return OptionResponse;
         }
     }
