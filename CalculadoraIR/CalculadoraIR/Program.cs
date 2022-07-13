@@ -20,6 +20,7 @@ namespace CalculadoraIR
             var PrintService = serviceProvicer.GetService<IPrintService>();
             var RepoService = serviceProvicer.GetService<IPersonRepository>();
 
+            RepoService.LoadRepo();
             int OptionResponse;
             string Response;
 
@@ -48,10 +49,10 @@ namespace CalculadoraIR
                         PrintService.PrintAllPeople(RepoService.GetPeople());
                         break;
                     default:
+                        RepoService.SaveRepo();
                         return;
                 }
             } while (true);
-
         }
         public static void ConfigureServices(IServiceCollection services)
         {

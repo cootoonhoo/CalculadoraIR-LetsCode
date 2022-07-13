@@ -1,1 +1,3 @@
-﻿
+﻿Marco Antonio Batista;10000
+Lucas Henrique;35000
+Josiel Fragra;50000
